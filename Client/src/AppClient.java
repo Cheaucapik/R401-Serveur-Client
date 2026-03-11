@@ -5,11 +5,17 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 public class AppClient {
-    private static int PORT = 2000;
+    private static int PORT;
     private static String HOST = "localhost";
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         BufferedReader clavier = new BufferedReader(new InputStreamReader(System.in)); //ce qu'on tape
+
+        if(args.length < 1){
+            System.out.println("Usage: java AppClient <port>");
+        }
+
+        PORT = Integer.parseInt(args[0]);
 
         Socket socket = null;
         try {
@@ -19,28 +25,13 @@ public class AppClient {
 
             System.out.println("Connecté au serveur " + socket.getInetAddress() + ":"+ socket.getPort());
 
-            String line;
+            String reponse;
             while(sin.readLine() != null) {
-                line = sin.readLine();
-                sout.println(line);
-                sout.flush();
+                System.out.println(sin.readLine()); //question
+                System.out.print("->"); //flèche pour répondre
+                reponse = clavier.readLine(); //réponse entrée au clavier
+                sout.println(reponse); //envoi de la réponse au serveur/service concerné
             }
-
-            line = sin.readLine();
-            System.out.println(line);
-
-            System.out.print("->");
-            line = clavier.readLine();
-            sout.println(line);
-            line = sin.readLine();
-            System.out.println(line);
-
-            System.out.print("->");
-            line = clavier.readLine();
-            sout.println(line);
-
-            System.out.println(sin.readLine());
-
             socket.close();
         }
         catch (IOException e) { System.err.println("Fin du service"); }

@@ -1,4 +1,4 @@
-package services.reservation;
+package services;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,8 +15,11 @@ public class ServiceReservation implements Runnable {
     @Override
     public void run() {
         try {
-            BufferedReader entree = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
-            PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
+            BufferedReader entree = new BufferedReader(new InputStreamReader(this.socket.getInputStream())); //Ce qu'on reçoit
+            PrintWriter writer = new PrintWriter(socket.getOutputStream(), true); //Pour envoyer des données
+
+            System.out.println();
+
             String message = entree.readLine();
 
             String invMessage = new StringBuffer(message).reverse().toString();
