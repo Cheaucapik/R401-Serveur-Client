@@ -4,15 +4,17 @@ import entities.*;
 public class Livre implements Document {
     private String titre;
     private int nbPages;
+    private int id;
 
-    public Livre(String titre, int nbPages) {
+    public Livre(int id, String titre, int nbPages) {
         this.titre = titre;
         this.nbPages = nbPages;
+        this.id = id;
     }
 
     @Override
-    public String idDoc() {
-        return "";
+    public int idDoc() {
+        return id;
     }
 
     @Override

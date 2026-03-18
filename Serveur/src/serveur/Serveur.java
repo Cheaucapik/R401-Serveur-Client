@@ -1,5 +1,4 @@
 package serveur;
-
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.ServerSocket;
@@ -9,10 +8,13 @@ public class Serveur implements Runnable {
     private int numPort;
     private ServerSocket serverSocket;
     private Class<? extends Runnable> serviceClass;
+    private Mediatheque mediatheque;
 
-    public Serveur(Class<? extends Runnable> serviceClass, int port) {
+
+    public Serveur(Class<? extends Runnable> serviceClass, int port, Mediatheque mediatheque) {
         this.numPort = port;
         this.serviceClass = serviceClass;
+        this.mediatheque = mediatheque;
     }
 
     @Override
@@ -22,7 +24,7 @@ public class Serveur implements Runnable {
             System.out.println("Lancement du serveur au port " + numPort);
             while (true) {
                 Socket client = this.serverSocket.accept();
-                new Thread(serviceClass.getDeclaredConstructor(Socket.class).newInstance(client)).start();
+                new Thread(serviceClass.getDeclaredConstructor(Socket.class, Mediatheque.class).newInstance(client, mediatheque)).start();
             }
         } catch (IOException | NoSuchMethodException e) {
             System.out.println(e);

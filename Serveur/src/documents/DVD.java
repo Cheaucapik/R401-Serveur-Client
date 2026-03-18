@@ -4,15 +4,17 @@ import entities.*;
 public class DVD implements Document {
     private String titre;
     private boolean adulte;
+    private int id;
 
-    public DVD(String titre, boolean adulte) {
+    public DVD(int id, String titre, boolean adulte) {
         this.titre = titre;
         this.adulte = adulte;
+        this.id = id;
     }
 
     @Override
-    public String idDoc() {
-        return "";
+    public int idDoc() {
+        return id;
     }
 
     @Override

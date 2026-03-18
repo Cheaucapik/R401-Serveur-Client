@@ -26,8 +26,9 @@ public class AppClient {
             System.out.println("Connecté au serveur " + socket.getInetAddress() + ":"+ socket.getPort());
 
             String reponse;
-            while(sin.readLine() != null) {
-                System.out.println(sin.readLine()); //question
+            String line;
+            while((line = sin.readLine()) != null) {
+                System.out.println(line); //question
                 System.out.print("->"); //flèche pour répondre
                 reponse = clavier.readLine(); //réponse entrée au clavier
                 sout.println(reponse); //envoi de la réponse au serveur/service concerné
@@ -35,16 +36,5 @@ public class AppClient {
             socket.close();
         }
         catch (IOException e) { System.err.println("Fin du service"); }
-        try { if (socket != null) socket.close(); }
-        catch (IOException e2) { ; }
-    }
-
-    private static boolean isNumeric(String string) {
-        try {
-            Integer.parseInt(string);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
     }
 }

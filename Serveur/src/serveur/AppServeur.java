@@ -1,21 +1,16 @@
 package serveur;
+import services.ServiceReservation;
+import services.ServiceEmprunt;
+import services.ServiceRetour;
 
 class AppServeur {
-    private static int PORT;
-    private static String service_class;
 
     public static void main(String[] args) throws Exception {
-
-        if(args.length < 2) {
-            System.out.println("Usage: java Serveur.AppServeur <port> <service_class>");
-            return;
-        }
-        PORT = Integer.parseInt(args[0]);
-        service_class = args[1];
-
+        Mediatheque mediatheque = new Mediatheque();
         try{
-            Class<? extends Runnable> service = (Class<? extends Runnable>) Class.forName(service_class);
-            new Thread(new Serveur(service, PORT)).start();
+            new Thread(new Serveur(ServiceReservation.class, 2000, mediatheque)).start();
+            new Thread(new Serveur(ServiceEmprunt.class, 2001, mediatheque)).start();
+            new Thread(new Serveur(ServiceRetour.class, 2002, mediatheque)).start();
         }
         catch (Exception e){
             throw new Exception(e.getMessage());
