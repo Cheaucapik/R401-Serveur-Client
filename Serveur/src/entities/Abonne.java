@@ -1,13 +1,13 @@
 package entities;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Abonne {
     private int numero;
     private String nom;
-    private Date DateNaissance;
+    private LocalDate DateNaissance;
 
-    public Abonne(int numero, String nom, Date DateNaissance) {
+    public Abonne(int numero, String nom, LocalDate DateNaissance) {
         this.numero = numero;
         this.nom = nom;
         this.DateNaissance = DateNaissance;
@@ -21,7 +21,7 @@ public class Abonne {
         return nom;
     }
 
-    public Date getDateNaissance() {
+    public LocalDate getDateNaissance() {
         return DateNaissance;
     }
 }

@@ -1,34 +1,39 @@
 package documents;
 import entities.*;
 
-public class DVD implements Document {
-    private String titre;
+import java.time.LocalDate;
+import java.time.Period;
+
+public class DVD extends ADocument {
     private boolean adulte;
-    private int id;
 
     public DVD(int id, String titre, boolean adulte) {
-        this.titre = titre;
+        super(id, titre);
         this.adulte = adulte;
-        this.id = id;
-    }
-
-    @Override
-    public int idDoc() {
-        return id;
     }
 
     @Override
     public void reservation(Abonne ab) throws ReservationException {
-
+        if (!isAdulte(ab)) {
+            throw new ReservationException("Vous n'avez pas l'âge pour emprunter le DVD " + getTitre());
+        }
+        super.reservation(ab);
     }
 
     @Override
     public void emprunt(Abonne ab) throws EmpruntException {
-
+        if (!isAdulte(ab)) {
+            throw new ReservationException("Vous n'avez pas l'âge pour emprunter le DVD " + getTitre());
+        }
+        super.emprunt(ab);
     }
 
-    @Override
-    public void retour() throws RetourException {
-
+    public boolean isAdulte(Abonne ab) {
+        if (this.adulte) {
+            LocalDate dateAb = ab.getDateNaissance();
+            LocalDate maintenant = LocalDate.now();
+            return Period.between(dateAb, maintenant).getYears() >= 18;
+        }
+        return true;
     }
 }

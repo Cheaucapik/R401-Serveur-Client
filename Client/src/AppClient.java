@@ -28,11 +28,17 @@ public class AppClient {
             String reponse;
             String line;
             while((line = sin.readLine()) != null) {
-                System.out.println(line); //question
-                System.out.print("->"); //flèche pour répondre
-                reponse = clavier.readLine(); //réponse entrée au clavier
-                sout.println(reponse); //envoi de la réponse au serveur/service concerné
+                if(line.startsWith("##")){
+                    System.out.println(line.substring(2).trim());
+                }
+                else{
+                    System.out.println(line); //question
+                    System.out.print("-> "); //flèche pour répondre
+                    reponse = clavier.readLine(); //réponse entrée au clavier
+                    sout.println(reponse); //envoi de la réponse au serveur/service concerné
+                }
             }
+
             socket.close();
         }
         catch (IOException e) { System.err.println("Fin du service"); }

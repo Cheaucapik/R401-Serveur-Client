@@ -5,8 +5,8 @@ import documents.Livre;
 import entities.Abonne;
 import entities.Document;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Mediatheque {
@@ -30,7 +30,7 @@ public class Mediatheque {
         documents.add(new DVD(docCpt, titre, adulte));
     }
 
-    public synchronized void ajouterAbonne(String nom, Date dateNaissance) {
+    public synchronized void ajouterAbonne(String nom, LocalDate dateNaissance) {
         abCpt++;
         abonnes.add(new Abonne(abCpt, nom, dateNaissance));
     }
@@ -39,6 +39,15 @@ public class Mediatheque {
         for (Abonne a : abonnes) {
             if(a.getNumero() == abCpt) {
                 return a;
+            }
+        }
+        return null;
+    }
+
+    public Document getDocument(int idDoc) {
+        for (Document d : documents) {
+            if(d.getId() == idDoc){
+                return d;
             }
         }
         return null;

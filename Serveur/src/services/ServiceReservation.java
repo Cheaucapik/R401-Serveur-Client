@@ -1,13 +1,12 @@
 package services;
 
 import entities.Abonne;
-import entities.EmpruntException;
+import entities.Document;
+import entities.ReservationException;
+import serveur.Dialogue;
 import serveur.Mediatheque;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.Socket;
 
 public class ServiceReservation implements Runnable {
@@ -21,27 +20,40 @@ public class ServiceReservation implements Runnable {
     @Override
     public void run() {
         try {
-            PrintWriter writer = new PrintWriter(socket.getOutputStream(), true); //Pour envoyer des données
-            BufferedReader entree = new BufferedReader(new InputStreamReader(this.socket.getInputStream())); //Ce qu'on reçoit
+            Dialogue dialogue = new Dialogue(socket, mediatheque);
 
-            writer.println("Veuillez entrer votre numéro d'abonné");
+            String clientIP = socket.getInetAddress().getHostAddress();
+            int clientPort = socket.getPort();
+            System.out.println("Service de réservation lancé pour le client : " + clientIP + ":" + clientPort);
+
+            dialogue.envoyerInfo("Bienvenue sur le service de reservation !");
+
+            Abonne abonne = dialogue.demanderAbonne();
+            if (abonne == null) return;
+            Document doc = dialogue.demanderDocument();
+            if (doc == null) return;
+
             try{
-                int numeroAb = Integer.parseInt(entree.readLine());
-                Abonne a = mediatheque.getAbonne(numeroAb);
-                if(a == null){
-                    writer.println("Erreur : Veuillez entrer un numéro d'abonné valide");
-                    return;
-                }
+                doc.reservation(abonne);
+                dialogue.envoyerInfo("Reservation du " + doc.getClass().getSimpleName() + " " + doc.getTitre() +  " validee");
+                System.out.println("Réservation du document " + doc.getId() + " " + doc.getTitre() +  " validee pour le client " + clientIP + ":" + clientPort );
             }
-            catch(Exception e){
-                writer.println("Erreur : Le numéro doit être un entier");
-                return;
+            catch(Exception e) {
+                dialogue.envoyerInfo("Erreur : " + e.getMessage());
             }
 
-            writer.println("Veuillez entrer l'identifiant du document");
+            dialogue.envoyerInfo("Fin de la session de reservation.");
+            System.out.println("Fin de la session reservation pour le client : " + clientIP + ":" + clientPort);
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Le client s'est déconnecté (Connection reset).");
+        } finally {
+            try {
+                if (socket != null && !socket.isClosed()) {
+                    socket.close();
+                }
+            } catch (IOException ex) {
+            }
         }
     }
 
