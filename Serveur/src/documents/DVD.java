@@ -32,7 +32,7 @@ public class DVD extends ADocument {
         if (this.adulte) {
             LocalDate dateAb = ab.getDateNaissance();
             LocalDate maintenant = LocalDate.now();
-            return Period.between(dateAb, maintenant).getYears() >= 18;
+            return Period.between(dateAb, maintenant).getYears() >= 16;
         }
         return true;
     }
