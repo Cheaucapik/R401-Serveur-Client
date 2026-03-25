@@ -32,7 +32,7 @@ public abstract class ADocument implements Document {
     public void reservation(Abonne ab) throws ReservationException {
         synchronized (this) {
             if(empruntePar != null) {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(":mm:ss");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                 throw new ReservationException("Le " + this.getClass().getSimpleName() + " " + titre + " est deja emprunte par un autre abonne jusqu'au " + dateEmprunteFin.format(formatter));
             }
             if(reservePar != null && dateReservFin != null && dateReservFin.isAfter(LocalDateTime.now())) {
