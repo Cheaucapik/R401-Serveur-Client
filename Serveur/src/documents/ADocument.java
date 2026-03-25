@@ -49,12 +49,12 @@ public abstract class ADocument implements Document {
     public void emprunt(Abonne ab) throws EmpruntException {
         synchronized (this) {
             if(empruntePar != null) {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                 throw new EmpruntException("Le " + this.getClass().getSimpleName() + " " + titre + " est deja emprunte par un autre abonne jusqu'au " + dateEmprunteFin.format(formatter));
             }
             if(reservePar != null && dateReservFin != null && dateReservFin.isAfter(LocalDateTime.now())) {
                 if(!reservePar.equals(ab)) {
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
                     throw new EmpruntException("Le " + this.getClass().getSimpleName() + " " + titre + " est deja reserve par un autre abonne jusqu'a " + dateReservFin.format(formatter));
                 }
             }
