@@ -1,8 +1,7 @@
 package services;
 
 import entities.Document;
-import serveur.Dialogue;
-import serveur.Mediatheque;
+import entities.Mediatheque;
 
 import java.io.IOException;
 import java.net.Socket;

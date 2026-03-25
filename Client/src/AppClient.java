@@ -35,6 +35,11 @@ public class AppClient {
                     System.out.println(line); //question
                     System.out.print("-> "); //flèche pour répondre
                     reponse = clavier.readLine(); //réponse entrée au clavier
+                    if (reponse != null && reponse.equalsIgnoreCase("q")) {
+                        System.out.println("Déconnexion demandée par l'utilisateur...");
+                        sout.println(reponse);
+                        break;
+                    }
                     sout.println(reponse); //envoi de la réponse au serveur/service concerné
                 }
             }

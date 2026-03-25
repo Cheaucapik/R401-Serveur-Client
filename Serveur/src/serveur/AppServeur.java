@@ -1,4 +1,5 @@
 package serveur;
+import entities.Mediatheque;
 import services.ServiceReservation;
 import services.ServiceEmprunt;
 import services.ServiceRetour;

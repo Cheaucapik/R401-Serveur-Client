@@ -1,9 +1,7 @@
-package serveur;
+package entities;
 
 import documents.DVD;
 import documents.Livre;
-import entities.Abonne;
-import entities.Document;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
