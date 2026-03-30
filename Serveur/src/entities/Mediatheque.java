@@ -13,24 +13,33 @@ public class Mediatheque {
     int abCpt = 0;
     int docCpt = 0;
 
+    private final Object lockDocs = new Object();
+    private final Object lockAbs = new Object();
+
     public Mediatheque() {
         documents = new ArrayList<Document>();
         abonnes = new ArrayList<Abonne>();
     }
 
-    public synchronized void ajouterLivre(String titre, int pages) {
-        docCpt++;
-        documents.add(new Livre(docCpt, titre, pages));
+    public void ajouterLivre(String titre, int pages) {
+        synchronized (lockDocs) {
+            docCpt++;
+            documents.add(new Livre(docCpt, titre, pages));
+        }
     }
 
-    public synchronized void ajouterDVD(String titre, boolean adulte) {
-        docCpt++;
-        documents.add(new DVD(docCpt, titre, adulte));
+    public void ajouterDVD(String titre, boolean adulte) {
+        synchronized (lockDocs) {
+            docCpt++;
+            documents.add(new DVD(docCpt, titre, adulte));
+        }
     }
 
-    public synchronized void ajouterAbonne(String nom, LocalDate dateNaissance) {
-        abCpt++;
-        abonnes.add(new Abonne(abCpt, nom, dateNaissance));
+    public void ajouterAbonne(String nom, LocalDate dateNaissance) {
+        synchronized (lockAbs) {
+            abCpt++;
+            abonnes.add(new Abonne(abCpt, nom, dateNaissance));
+        }
     }
 
     public Abonne getAbonne(int abCpt) {
