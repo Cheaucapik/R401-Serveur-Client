@@ -23,7 +23,7 @@ public class DVD extends ADocument {
     @Override
     public void emprunt(Abonne ab) throws EmpruntException {
         if (!isAdulte(ab)) {
-            throw new ReservationException("Vous n'avez pas l'âge pour emprunter le DVD " + getTitre());
+            throw new EmpruntException("Vous n'avez pas l'âge pour emprunter le DVD " + getTitre());
         }
         super.emprunt(ab);
     }

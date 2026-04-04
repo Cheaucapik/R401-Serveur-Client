@@ -73,4 +73,19 @@ public class Dialogue {
         }
         return doc;
     }
+
+    public String demanderOuiNon(String question) throws IOException {
+        String reponse = null;
+        while (reponse == null) {
+            writer.println(question + " (o/n) : ");
+            String line = lireReponse();
+            if (line == null) return null;
+            if (line.equalsIgnoreCase("o") || line.equalsIgnoreCase("n")) {
+                reponse = line.toLowerCase();
+            } else {
+                writer.println("Erreur : Repondre par 'o' (oui) ou 'n' (non).");
+            }
+        }
+        return reponse;
+    }
 }
