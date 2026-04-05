@@ -48,8 +48,8 @@ public abstract class ADocument implements Document {
 
             reservePar = ab;
             //SUJET: dateReservFin = LocalDateTime.now().plusHours(2);
-            //TEST(30 sec):
-            dateReservFin = LocalDateTime.now().plusSeconds(30);
+            //TEST(90 sec):
+            dateReservFin = LocalDateTime.now().plusSeconds(90);
         }
     }
 
